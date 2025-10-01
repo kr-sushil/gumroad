@@ -24,9 +24,14 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
   const loggedInUser = useLoggedInUser();
 
   return (
-    <div className={cx("profile", className)}>
-      <header className="relative z-20 bg-background">
-        <section>
+    <div
+      className={cx(
+        "override grid min-h-full grid-rows-[auto_1fr] lg:[&.reader>main>.comments]:pr-[max(100%-50rem-max((100%-71.25rem)/2,4rem),4rem)] [&.reader>main>article]:text-lg lg:[&.reader>main>article]:pr-[max(100%-50rem-max((100%-71.25rem)/2,4rem),4rem)]",
+        className,
+      )}
+    >
+      <header className="override relative z-20 grid grid-cols-[1fr] bg-background text-lg lg:grid-flow-col lg:items-center lg:gap-8 lg:border-b lg:border-border lg:px-[max((100%-71.25rem)/2,4rem)] lg:py-6">
+        <section className="flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
           {(loggedInUser?.isGumroadAdmin || loggedInUser?.isImpersonating) &&
           creatorProfile.external_id !== loggedInUser.id ? (
             <NavigationButton
@@ -43,12 +48,12 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
           </a>
         </section>
         {!hideFollowForm ? (
-          <section>
+          <section className="col-span-2 col-end-auto flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
             <FollowForm creatorProfile={creatorProfile} />
           </section>
         ) : null}
         {creatorProfile.twitter_handle || cartItemsCount ? (
-          <section className="links">
+          <section className="col-span-2 col-start-2 col-end-auto row-start-1 flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
             {creatorProfile.twitter_handle ? (
               <NavigationButton outline href={`https://twitter.com/${creatorProfile.twitter_handle}`} target="_blank">
                 <Icon name="twitter" />
@@ -58,7 +63,12 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
           </section>
         ) : null}
       </header>
-      <main className={cx("custom-sections", loggedInUser?.id === creatorProfile.external_id && "has-user")}>
+      <main
+        className={cx(
+          "custom-sections row-[unset] lg:*:px-[max((100%-71.25rem)/2,4rem)] lg:[&>footer]:py-6 lg:[&>footer]:text-left",
+          loggedInUser?.id === creatorProfile.external_id && "has-user",
+        )}
+      >
         {children}
         <PoweredByFooter />
       </main>
