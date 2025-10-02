@@ -10,6 +10,7 @@ import {
   Comment,
   PaginatedComments,
 } from "$app/data/comments";
+import { classNames } from "$app/utils/classNames";
 import { formatDate } from "$app/utils/date";
 import { assertResponseError } from "$app/utils/request";
 
@@ -43,8 +44,8 @@ export const useCommentsMetadata = (): CommentsMetadata => {
 };
 type CommentWithReplies = Comment & { replies: CommentWithReplies[] };
 
-type Props = { paginated_comments: PaginatedComments };
-export const PostCommentsSection = ({ paginated_comments }: Props) => {
+type Props = { paginated_comments: PaginatedComments; className?: string };
+export const PostCommentsSection = ({ paginated_comments, className }: Props) => {
   const { commentable_id, purchase_id } = useCommentsMetadata();
   const loggedInUser = useLoggedInUser();
 
@@ -127,7 +128,12 @@ export const PostCommentsSection = ({ paginated_comments }: Props) => {
   const nestedComments = React.useMemo(() => nestComments(data.comments), [data.comments]);
 
   return (
-    <section className="comments comments-section override grid gap-8 border-b border-border p-4 lg:py-12">
+    <section
+      className={classNames(
+        "comments comments-section override grid gap-8 border-b border-border p-4 lg:py-12",
+        className,
+      )}
+    >
       <h2>
         {data.count} {data.count === 1 ? "comment" : "comments"}
       </h2>

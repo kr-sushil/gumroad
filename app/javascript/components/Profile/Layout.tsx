@@ -1,7 +1,7 @@
-import cx from "classnames";
 import * as React from "react";
 
 import { CreatorProfile } from "$app/parsers/profile";
+import { classNames } from "$app/utils/classNames";
 
 import { NavigationButton } from "$app/components/Button";
 import { CartNavigationButton } from "$app/components/Checkout/CartNavigationButton";
@@ -24,13 +24,8 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
   const loggedInUser = useLoggedInUser();
 
   return (
-    <div
-      className={cx(
-        "override grid min-h-full grid-rows-[auto_1fr] lg:[&.reader>main>.comments]:pr-[max(100%-50rem-max((100%-71.25rem)/2,4rem),4rem)] [&.reader>main>article]:text-lg lg:[&.reader>main>article]:pr-[max(100%-50rem-max((100%-71.25rem)/2,4rem),4rem)]",
-        className,
-      )}
-    >
-      <header className="override relative z-20 grid grid-cols-[1fr] bg-background text-lg lg:grid-flow-col lg:items-center lg:gap-8 lg:border-b lg:border-border lg:px-[max((100%-71.25rem)/2,4rem)] lg:py-6">
+    <div className={classNames("override grid min-h-full grid-rows-[auto_1fr]", className)}>
+      <header className="override relative z-20 grid grid-cols-[1fr] bg-background text-lg lg:grid-flow-col lg:items-center lg:gap-8 lg:border-b lg:border-border lg:px-[var(--body-padding-desktop-center)] lg:py-6">
         <section className="flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
           {(loggedInUser?.isGumroadAdmin || loggedInUser?.isImpersonating) &&
           creatorProfile.external_id !== loggedInUser.id ? (
@@ -64,13 +59,13 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
         ) : null}
       </header>
       <main
-        className={cx(
-          "custom-sections row-[unset] lg:*:px-[max((100%-71.25rem)/2,4rem)] lg:[&>footer]:py-6 lg:[&>footer]:text-left",
+        className={classNames(
+          "custom-sections row-[unset] lg:*:px-[var(--body-padding-desktop-center)]",
           loggedInUser?.id === creatorProfile.external_id && "has-user",
         )}
       >
         {children}
-        <PoweredByFooter />
+        <PoweredByFooter className="lg:py-6 lg:text-left" />
       </main>
     </div>
   );

@@ -31,3 +31,9 @@
     transform: translateX(0);
   }
 }
+
+:root {
+  --body-max-width: 71.25rem;
+  --body-padding-desktop: 4rem;
+  --body-padding-desktop-center: max((100% - var(--body-max-width)) / 2, var(--body-padding-desktop));
+}
