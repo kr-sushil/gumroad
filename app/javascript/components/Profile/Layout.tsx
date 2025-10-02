@@ -48,7 +48,7 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
           </section>
         ) : null}
         {creatorProfile.twitter_handle || cartItemsCount ? (
-          <section className="col-span-2 col-start-2 col-end-auto row-start-1 flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
+          <section className="col-start-2 col-end-auto row-start-1 row-end-auto flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
             {creatorProfile.twitter_handle ? (
               <NavigationButton outline href={`https://twitter.com/${creatorProfile.twitter_handle}`} target="_blank">
                 <Icon name="twitter" />
