@@ -117,7 +117,7 @@ const WishlistItemCard = ({
       footerAction={
         <>
           {canEdit ? (
-            <div style={{ padding: 0, display: "grid" }}>
+            <div className="override grid !p-0">
               <WithTooltip position="top" tip="Remove this product">
                 <button
                   disabled={isDeleting}
@@ -131,7 +131,7 @@ const WishlistItemCard = ({
             </div>
           ) : null}
           {item.purchasable && item.giftable ? (
-            <div style={{ padding: 0, display: "grid" }}>
+            <div className="override grid !p-0">
               <WithTooltip position="top" tip="Gift this product">
                 <a
                   aria-label="Gift this product"
@@ -147,7 +147,7 @@ const WishlistItemCard = ({
       }
       badge={
         item.purchasable ? (
-          <div style={{ position: "absolute", top: "var(--spacer-4)", right: "var(--spacer-4)" }}>
+          <div className="absolute right-4 top-4">
             <WithTooltip position="top" tip="Add to cart">
               <NavigationButton
                 href={addToCartUrl(item)}
@@ -257,8 +257,8 @@ export const Wishlist = ({
         }
       >
         {user ? (
-          <a style={{ display: "flex", alignItems: "center", gap: "var(--spacer-2)" }} href={user.profile_url}>
-            <img className="user-avatar" src={user.avatar_url} style={{ width: "var(--spacer-5)" }} />
+          <a className="flex items-center gap-2" href={user.profile_url}>
+            <img className="user-avatar !w-6" src={user.avatar_url} />
             <h4>{user.name}</h4>
           </a>
         ) : null}
