@@ -130,7 +130,7 @@ export const PostCommentsSection = ({ paginated_comments, className }: Props) =>
   return (
     <section
       className={classNames(
-        "comments comments-section override grid gap-8 border-b border-border p-4 lg:py-12",
+        "comments comments-section override border-border grid gap-8 border-b p-4 lg:py-12",
         className,
       )}
     >

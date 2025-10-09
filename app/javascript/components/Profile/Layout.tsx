@@ -25,8 +25,8 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
 
   return (
     <div className={classNames("override grid min-h-full grid-rows-[auto_1fr]", className)}>
-      <header className="override relative z-20 grid grid-cols-[1fr] bg-background text-lg lg:grid-flow-col lg:items-center lg:gap-8 lg:border-b lg:border-border lg:px-[var(--body-padding-desktop-center)] lg:py-6">
-        <section className="flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
+      <header className="override bg-background lg:border-border relative z-20 grid grid-cols-[1fr] text-lg lg:grid-flow-col lg:items-center lg:gap-8 lg:border-b lg:px-[var(--body-padding-desktop-center)] lg:py-6">
+        <section className="border-border flex items-center gap-3 border-b px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
           {(loggedInUser?.isGumroadAdmin || loggedInUser?.isImpersonating) &&
           creatorProfile.external_id !== loggedInUser.id ? (
             <NavigationButton
@@ -43,12 +43,12 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
           </a>
         </section>
         {!hideFollowForm ? (
-          <section className="col-span-2 col-end-auto flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
+          <section className="border-border col-span-2 col-end-auto flex items-center gap-3 border-b px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
             <FollowForm creatorProfile={creatorProfile} />
           </section>
         ) : null}
         {creatorProfile.twitter_handle || cartItemsCount ? (
-          <section className="col-start-2 col-end-auto row-start-1 row-end-auto flex items-center gap-3 border-b border-border px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
+          <section className="border-border col-start-2 col-end-auto row-start-1 row-end-auto flex items-center gap-3 border-b px-4 py-8 lg:col-[unset] lg:row-[unset] lg:border-none lg:p-0">
             {creatorProfile.twitter_handle ? (
               <NavigationButton outline href={`https://twitter.com/${creatorProfile.twitter_handle}`} target="_blank">
                 <Icon name="twitter" />

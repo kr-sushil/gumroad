@@ -73,7 +73,7 @@ const PostPage = ({
         <h1>{subject}</h1>
         <time>{publishedAtFormatted}</time>
       </header>
-      <article className="override border-border grid gap-8 border-b p-4 pt-8 text-lg lg:pt-12 lg:!pr-[max(100%-50rem-var(--body-padding-desktop-center),var(--body-padding-desktop))] lg:pb-8">
+      <article className="override border-border grid gap-8 border-b p-4 pt-8 text-lg lg:pt-12 lg:pr-[max(100%-50rem-var(--body-padding-desktop-center),var(--body-padding-desktop))]! lg:pb-8">
         {pageLoaded ? null : <LoadingSpinner width="2em" />}
         <EditorContent className="rich-text" editor={editor} />
 
@@ -113,7 +113,7 @@ const PostPage = ({
         >
           <PostCommentsSection
             paginated_comments={paginated_comments}
-            className="lg:!pr-[max(100%-50rem-var(--body-padding-desktop-center),var(--body-padding-desktop))]"
+            className="lg:pr-[max(100%-50rem-var(--body-padding-desktop-center),var(--body-padding-desktop))]!"
           />
         </CommentsMetadataProvider>
       ) : null}
