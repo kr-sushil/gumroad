@@ -37,13 +37,6 @@ select[multiple].chosen-fallback {
   height: 100% !important;
 }
 
-@include breakpoint-up(lg) {
-  .discover.custom-sections > section {
-    padding-left: $body-padding-desktop-center;
-    padding-right: $body-padding-desktop-center;
-  }
-}
-
 [role="tree"] [role="treeitem"].sortable-ghost {
   background-color: gray(1);
   border: dashed $border-width $border-color;

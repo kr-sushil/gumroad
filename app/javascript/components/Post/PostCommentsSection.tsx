@@ -129,10 +129,7 @@ export const PostCommentsSection = ({ paginated_comments, className }: Props) =>
 
   return (
     <section
-      className={classNames(
-        "comments comments-section override border-border grid gap-8 border-b p-4 lg:py-12",
-        className,
-      )}
+      className={classNames("comments comments-section border-border grid gap-8 border-b p-4 lg:py-12", className)}
     >
       <h2>
         {data.count} {data.count === 1 ? "comment" : "comments"}
@@ -147,7 +144,7 @@ export const PostCommentsSection = ({ paginated_comments, className }: Props) =>
         </Button>
       </CommentTextarea>
       {nestedComments.length > 0 ? <hr /> : null}
-      <div className="override grid gap-6">
+      <div className="grid gap-6">
         {nestedComments.map((comment) => (
           <CommentContainer
             key={comment.id}
@@ -256,7 +253,7 @@ const CommentContainer = ({ comment, upsertComment, confirmCommentDeletion }: Co
             {comment.is_editable || comment.is_deletable ? (
               <Popover aria-label="Open comment action menu" trigger={<Icon name="three-dots" />}>
                 {(close) => (
-                  <div className="override grid gap-3" onClick={close}>
+                  <div className="grid gap-3" onClick={close}>
                     {comment.is_editable ? (
                       <Button onClick={() => setEditDraft(comment.content.original)}>Edit</Button>
                     ) : null}
