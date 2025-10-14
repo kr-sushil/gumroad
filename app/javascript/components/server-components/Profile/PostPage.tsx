@@ -73,7 +73,7 @@ const PostPage = ({
         <h1>{subject}</h1>
         <time>{publishedAtFormatted}</time>
       </header>
-      <article className="border-border grid gap-8 border-b p-4 pt-8 text-lg lg:pt-12 lg:pr-[max(100%-50rem-var(--body-padding-desktop-center),var(--body-padding-desktop))]! lg:pb-8">
+      <article className="border-border grid gap-8 border-b p-4 pt-8 text-lg lg:pt-12 lg:pb-8 lg:*:max-w-4xl">
         {pageLoaded ? null : <LoadingSpinner width="2em" />}
         <EditorContent className="rich-text" editor={editor} />
 
@@ -111,10 +111,7 @@ const PostPage = ({
             max_allowed_depth: comments_max_allowed_depth,
           }}
         >
-          <PostCommentsSection
-            paginated_comments={paginated_comments}
-            className="lg:pr-[max(100%-50rem-var(--body-padding-desktop-center),var(--body-padding-desktop))]!"
-          />
+          <PostCommentsSection paginated_comments={paginated_comments} className="lg:*:max-w-4xl" />
         </CommentsMetadataProvider>
       ) : null}
       {recent_posts.length > 0 ? (

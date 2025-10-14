@@ -33,6 +33,7 @@
   --shadow-lg: 0.5rem 0.5rem 0 currentColor;
 
   --spacing-product-page: 75.25rem;
+  --spacing-profile-padding: max(calc((100% - 71.25rem) / 2), 4rem);
 }
 
 @layer base {
@@ -69,10 +70,4 @@
   100% {
     transform: translateX(0);
   }
-}
-
-:root {
-  --body-max-width: 71.25rem;
-  --body-padding-desktop: 4rem;
-  --body-padding-desktop-center: max((100% - var(--body-max-width)) / 2, var(--body-padding-desktop));
 }
