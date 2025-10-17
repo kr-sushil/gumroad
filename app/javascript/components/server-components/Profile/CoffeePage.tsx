@@ -85,7 +85,7 @@ export const CoffeeProduct = ({
     </>
   );
   return (
-    <section className={classNames("flex grow-1 flex-col justify-center gap-12! px-4", classname)}>
+    <section className={classNames("flex grow-1 flex-col justify-center gap-12 px-4", classname)}>
       <section className="grid gap-8">
         <h1>{product.name}</h1>
         {product.description_html ? <h3 dangerouslySetInnerHTML={{ __html: product.description_html }} /> : null}
