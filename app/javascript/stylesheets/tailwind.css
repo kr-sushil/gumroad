@@ -35,7 +35,6 @@
 
   --spacing-product-page: 75.25rem;
   --grid-cols-sidebar: 1fr 3fr;
-  --spacing-profile-padding: max(calc((100% - 71.25rem) / 2), 4rem);
   --animate-fade-in-down-out-up: fade-in-down-out-up 5s both;
 
   @keyframes fade-in-down-out-up {

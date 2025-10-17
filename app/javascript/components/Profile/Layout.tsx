@@ -60,7 +60,7 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
           ) : null}
         </div>
       </header>
-      <main className="grow-1 lg:*:px-profile-padding">
+      <main className="grow-1">
         {children}
         <PoweredByFooter className="mx-auto w-full lg:max-w-7xl lg:px-16 lg:py-6 lg:text-left" />
       </main>
