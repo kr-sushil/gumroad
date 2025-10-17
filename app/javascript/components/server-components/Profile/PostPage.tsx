@@ -69,38 +69,42 @@ const PostPage = ({
 
   return (
     <Layout className="reader" creatorProfile={creator_profile}>
-      <header className="border-border grid gap-2 border-b px-4 py-8">
-        <h1>{subject}</h1>
-        <time>{publishedAtFormatted}</time>
+      <header className="border-b border-border">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-8 lg:px-16">
+          <h1>{subject}</h1>
+          <time>{publishedAtFormatted}</time>
+        </div>
       </header>
-      <article className="border-border grid gap-8 border-b p-4 pt-8 text-lg lg:pt-12 lg:pb-8">
-        {pageLoaded ? null : <LoadingSpinner width="2em" />}
-        <EditorContent className="rich-text lg:max-w-4xl" editor={editor} />
+      <article className="border-b border-border">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-4 pt-8 text-lg lg:px-16 lg:pt-12 lg:pb-8">
+          {pageLoaded ? null : <LoadingSpinner width="2em" />}
+          <EditorContent className="rich-text lg:max-w-4xl" editor={editor} />
 
-        {call_to_action || download_url ? (
-          <div className="mb-4 grid lg:max-w-4xl">
-            {call_to_action ? (
-              <p>
-                <a
-                  className="button accent"
-                  href={call_to_action.url}
-                  target="_blank"
-                  style={{ whiteSpace: "normal" }}
-                  rel="noopener noreferrer"
-                >
-                  {call_to_action.text}
-                </a>
-              </p>
-            ) : null}
-            {download_url ? (
-              <p>
-                <a className="button accent" href={download_url}>
-                  View content
-                </a>
-              </p>
-            ) : null}
-          </div>
-        ) : null}
+          {call_to_action || download_url ? (
+            <div className="mb-4 grid lg:max-w-4xl">
+              {call_to_action ? (
+                <p>
+                  <a
+                    className="button accent"
+                    href={call_to_action.url}
+                    target="_blank"
+                    style={{ whiteSpace: "normal" }}
+                    rel="noopener noreferrer"
+                  >
+                    {call_to_action.text}
+                  </a>
+                </p>
+              ) : null}
+              {download_url ? (
+                <p>
+                  <a className="button accent" href={download_url}>
+                    View content
+                  </a>
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
       </article>
       {paginated_comments ? (
         <CommentsMetadataProvider
@@ -111,7 +115,7 @@ const PostPage = ({
             max_allowed_depth: comments_max_allowed_depth,
           }}
         >
-          <PostCommentsSection paginated_comments={paginated_comments} className="lg:*:max-w-4xl" />
+          <PostCommentsSection paginated_comments={paginated_comments} reader />
         </CommentsMetadataProvider>
       ) : null}
       {recent_posts.length > 0 ? (
@@ -120,7 +124,7 @@ const PostPage = ({
             <a
               key={post.slug}
               href={Routes.custom_domain_view_post_path(post.slug, { purchase_id })}
-              className="border-border flex justify-between border-b px-4 py-8 no-underline lg:py-12"
+              className="flex justify-between border-b border-border px-4 py-8 no-underline lg:py-12"
             >
               <div>
                 <h2>{post.name}</h2>
@@ -132,7 +136,7 @@ const PostPage = ({
           {has_posts_on_profile ? (
             <a
               href={Routes.root_path()}
-              className="border-border flex justify-between border-b px-4 py-8 no-underline lg:py-12"
+              className="flex justify-between border-b border-border px-4 py-8 no-underline lg:py-12"
             >
               <h2>See all posts from {creator_profile.name}</h2>
               <Icon name="arrow-diagonal-up-right" className="text-lg" />

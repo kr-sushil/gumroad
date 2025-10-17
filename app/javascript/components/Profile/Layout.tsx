@@ -25,47 +25,49 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
 
   return (
     <div className={classNames("flex min-h-full flex-col", className)}>
-      <header className="bg-background lg:border-border lg:px-profile-padding relative z-20 text-lg lg:flex lg:items-center lg:gap-8 lg:border-b lg:py-6">
-        <section className="border-border flex items-center gap-3 border-b px-4 py-8 lg:grow-1 lg:border-none lg:p-0">
-          {(loggedInUser?.isGumroadAdmin || loggedInUser?.isImpersonating) &&
-          creatorProfile.external_id !== loggedInUser.id ? (
-            <NavigationButton
-              style={{ position: "absolute", left: "var(--spacer-3)" }}
-              color="filled"
-              href={Routes.admin_impersonate_url({ user_identifier: creatorProfile.external_id })}
-            >
-              Impersonate
-            </NavigationButton>
-          ) : null}
-          <img className="user-avatar" src={creatorProfile.avatar_url} alt="Profile Picture" />
-          <a href={Routes.root_path()} style={{ textDecoration: "none" }}>
-            {creatorProfile.name}
-          </a>
-        </section>
-        {!hideFollowForm ? (
-          <section className="border-border flex border-b px-4 py-8 lg:border-none lg:p-0">
-            <FollowForm creatorProfile={creatorProfile} />
-          </section>
-        ) : null}
-        {creatorProfile.twitter_handle || cartItemsCount ? (
-          <section className="border-border border-b px-4 py-8 lg:border-none lg:p-0">
-            {creatorProfile.twitter_handle ? (
-              <NavigationButton outline href={`https://twitter.com/${creatorProfile.twitter_handle}`} target="_blank">
-                <Icon name="twitter" />
+      <header className="relative z-20 border-b border-border bg-background text-lg">
+        <div className="mx-auto w-full lg:flex lg:max-w-7xl lg:items-center lg:gap-8 lg:px-16 lg:py-6">
+          <section className="flex items-center gap-3 px-4 py-8 lg:grow-1 lg:p-0">
+            {(loggedInUser?.isGumroadAdmin || loggedInUser?.isImpersonating) &&
+            creatorProfile.external_id !== loggedInUser.id ? (
+              <NavigationButton
+                style={{ position: "absolute", left: "var(--spacer-3)" }}
+                color="filled"
+                href={Routes.admin_impersonate_url({ user_identifier: creatorProfile.external_id })}
+              >
+                Impersonate
               </NavigationButton>
             ) : null}
-            <CartNavigationButton />
+            <img className="user-avatar" src={creatorProfile.avatar_url} alt="Profile Picture" />
+            <a href={Routes.root_path()} style={{ textDecoration: "none" }}>
+              {creatorProfile.name}
+            </a>
           </section>
-        ) : null}
+          {!hideFollowForm ? (
+            <section className="flex border-t border-border px-4 py-8 lg:border-none lg:p-0">
+              <FollowForm creatorProfile={creatorProfile} />
+            </section>
+          ) : null}
+          {creatorProfile.twitter_handle || cartItemsCount ? (
+            <section className="border-t border-border px-4 py-8 lg:border-none lg:p-0">
+              {creatorProfile.twitter_handle ? (
+                <NavigationButton outline href={`https://twitter.com/${creatorProfile.twitter_handle}`} target="_blank">
+                  <Icon name="twitter" />
+                </NavigationButton>
+              ) : null}
+              <CartNavigationButton />
+            </section>
+          ) : null}
+        </div>
       </header>
       <main
         className={classNames(
-          "custom-sections lg:*:px-profile-padding grow-1",
+          "custom-sections grow-1 lg:*:px-profile-padding",
           loggedInUser?.id === creatorProfile.external_id && "has-user",
         )}
       >
         {children}
-        <PoweredByFooter className="lg:py-6 lg:text-left" />
+        <PoweredByFooter className="mx-auto w-full lg:max-w-7xl lg:px-16 lg:py-6 lg:text-left" />
       </main>
     </div>
   );
