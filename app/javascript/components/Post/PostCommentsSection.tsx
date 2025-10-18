@@ -128,8 +128,8 @@ export const PostCommentsSection = ({ paginated_comments, reader = false }: Prop
   const nestedComments = React.useMemo(() => nestComments(data.comments), [data.comments]);
 
   return (
-    <section className="comments border-b border-border p-4 lg:py-12">
-      <div className="mx-auto w-full max-w-7xl lg:px-16">
+    <section className="comments border-b border-border">
+      <div className="mx-auto w-full max-w-7xl p-4 lg:px-16 lg:py-12">
         <div className={classNames("flex flex-col gap-8", reader && "lg:max-w-4xl")}>
           <h2>
             {data.count} {data.count === 1 ? "comment" : "comments"}
