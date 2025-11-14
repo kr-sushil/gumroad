@@ -72,7 +72,7 @@ export const PostCommentsSection = ({ paginated_comments, reader = false }: Prop
   const deleteComment = async () => {
     if (!commentToDelete) return;
     try {
-      await deleteCommentRequest({
+      const deletedCommentIds = await deleteCommentRequest({
         commentable_id,
         purchase_id,
         id: commentToDelete.comment.id,
@@ -82,7 +82,7 @@ export const PostCommentsSection = ({ paginated_comments, reader = false }: Prop
       setData((data) => ({
         ...data,
         comments: data.comments.filter((comment) => comment.id !== commentToDelete.comment.id),
-        count: data.count - 1,
+        count: data.count - deletedCommentIds.length,
       }));
     } catch (e) {
       assertResponseError(e);
@@ -216,6 +216,7 @@ const CommentContainer = ({ comment, upsertComment, confirmCommentDeletion }: Co
       });
       showAlert("Successfully updated the comment", "success");
       upsertComment(updated);
+      setEditDraft(null);
     } catch (e) {
       assertResponseError(e);
       showAlert(`An error occurred while updating the comment - ${e.message}`, "error");

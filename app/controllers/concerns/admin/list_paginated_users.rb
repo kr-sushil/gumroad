@@ -11,7 +11,7 @@ module Admin::ListPaginatedUsers
   RECORDS_PER_PAGE = 5
 
   private
-    def list_paginated_users(users:, template:, legacy_template:)
+    def list_paginated_users(users:, template:, legacy_template:, single_result_redirect_path: nil)
       pagination, users = pagy_countless(
         users,
         limit: params[:per_page] || RECORDS_PER_PAGE,
@@ -19,22 +19,26 @@ module Admin::ListPaginatedUsers
         countless_minimal: true
       )
 
+      if single_result_redirect_path && pagination.page == 1 && users.length == 1
+        return redirect_to single_result_redirect_path.call(users.first)
+      end
+
       respond_to do |format|
         format.html do
           render(
             inertia: template,
             props: {
               users: InertiaRails.merge do
-                users.with_blocked_attributes_for(:form_email, :form_email_domain).map do |user|
-                  user.as_json(
-                    admin: true,
-                    impersonatable: policy([:admin, :impersonators, user]).create?
-                  )
-                end
+                users.with_attached_avatar
+                     .includes(:admin_manageable_user_memberships)
+                     .with_blocked_attributes_for(:form_email, :form_email_domain)
+                     .map do |user|
+                       Admin::UserPresenter::Card.new(user: user, pundit_user:).props
+                     end
               end,
               pagination:
             },
-            legacy_template: legacy_template
+            legacy_template:
           )
         end
         format.json { render json: { users:, pagination: } }
