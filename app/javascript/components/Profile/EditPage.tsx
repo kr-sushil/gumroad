@@ -196,58 +196,60 @@ export const EditProfile = (props: Props) => {
 
   return (
     <SectionReducerContext.Provider value={reducer}>
-      <header className="relative grid grid-cols-1 gap-4 border-b border-border px-4 py-8">
-        {/* Work around position:absolute being affected by header's grid */}
-        <SectionToolbar>
-          <EditorMenu label="Page settings" onClose={() => void saveTabs(tabs)}>
-            <EditorSubmenu heading="Pages" text={tabs.length}>
-              {tabs.length > 0 ? (
-                <Sortable
-                  list={tabs}
-                  setList={setTabs}
-                  tag={TabList}
-                  handle="[aria-grabbed]"
-                  onChoose={(e) => setDraggedTab(tabs[e.oldIndex ?? -1]?.id ?? null)}
-                  onUnchoose={() => setDraggedTab(null)}
-                >
-                  {tabs.map((tab) => (
-                    <EditTab
-                      key={tab.id}
-                      tab={tab}
-                      dragging={tab.id === draggedTab}
-                      focus={hasAddedTab}
-                      update={updateTab}
-                      remove={() => setTabs(tabs.filter((existing) => existing !== tab))}
-                    />
-                  ))}
-                </Sortable>
-              ) : null}
-              <Button onClick={addTab}>New page</Button>
-            </EditorSubmenu>
-          </EditorMenu>
-        </SectionToolbar>
-        {props.bio ? (
-          <h1 style={{ whiteSpace: "pre-line" }}>
-            <AutoLink text={props.bio} />
-          </h1>
-        ) : null}
-        <Tabs aria-label="Profile Tabs">
-          {tabs.map((tab) => (
-            <Tab
-              key={tab.id}
-              isSelected={tab === selectedTab}
-              onClick={() => {
-                if (imageUploadSettings.isUploading) {
-                  showAlert("Please wait for all images to finish uploading before switching tabs.", "warning");
-                  return;
-                }
-                setSelectedTab(tab);
-              }}
-            >
-              {tab.name}
-            </Tab>
-          ))}
-        </Tabs>
+      <header className="relative border-b border-border">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-8 lg:px-16">
+          {/* Work around position:absolute being affected by header's grid */}
+          <SectionToolbar>
+            <EditorMenu label="Page settings" onClose={() => void saveTabs(tabs)}>
+              <EditorSubmenu heading="Pages" text={tabs.length}>
+                {tabs.length > 0 ? (
+                  <Sortable
+                    list={tabs}
+                    setList={setTabs}
+                    tag={TabList}
+                    handle="[aria-grabbed]"
+                    onChoose={(e) => setDraggedTab(tabs[e.oldIndex ?? -1]?.id ?? null)}
+                    onUnchoose={() => setDraggedTab(null)}
+                  >
+                    {tabs.map((tab) => (
+                      <EditTab
+                        key={tab.id}
+                        tab={tab}
+                        dragging={tab.id === draggedTab}
+                        focus={hasAddedTab}
+                        update={updateTab}
+                        remove={() => setTabs(tabs.filter((existing) => existing !== tab))}
+                      />
+                    ))}
+                  </Sortable>
+                ) : null}
+                <Button onClick={addTab}>New page</Button>
+              </EditorSubmenu>
+            </EditorMenu>
+          </SectionToolbar>
+          {props.bio ? (
+            <h1 style={{ whiteSpace: "pre-line" }}>
+              <AutoLink text={props.bio} />
+            </h1>
+          ) : null}
+          <Tabs aria-label="Profile Tabs">
+            {tabs.map((tab) => (
+              <Tab
+                key={tab.id}
+                isSelected={tab === selectedTab}
+                onClick={() => {
+                  if (imageUploadSettings.isUploading) {
+                    showAlert("Please wait for all images to finish uploading before switching tabs.", "warning");
+                    return;
+                  }
+                  setSelectedTab(tab);
+                }}
+              >
+                {tab.name}
+              </Tab>
+            ))}
+          </Tabs>
+        </div>
       </header>
       <div className="fixed! top-5 right-3 z-30 p-0! lg:top-3 lg:right-auto lg:left-3">
         <WithTooltip tip="Edit profile" position={isDesktop ? "right" : "left"}>
