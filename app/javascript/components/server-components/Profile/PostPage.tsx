@@ -70,18 +70,18 @@ const PostPage = ({
   return (
     <Layout className="reader" creatorProfile={creator_profile}>
       <header className="border-b border-border">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-8 lg:px-16">
+        <div className="mx-auto flex w-full max-w-product-page flex-col gap-2 px-4 py-8 lg:px-16 xl:px-8">
           <h1>{subject}</h1>
           <time>{publishedAtFormatted}</time>
         </div>
       </header>
       <article className="border-b border-border">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-4 pt-8 text-lg lg:px-16 lg:pt-12 lg:pb-8">
+        <div className="mx-auto flex w-full max-w-product-page flex-col gap-8 p-4 pt-8 text-lg lg:px-16 lg:pt-12 lg:pb-8 xl:px-8">
           {pageLoaded ? null : <LoadingSpinner className="size-8" />}
-          <EditorContent className="rich-text lg:max-w-4xl" editor={editor} />
+          <EditorContent className="rich-text lg:max-w-200" editor={editor} />
 
           {call_to_action || download_url ? (
-            <div className="mb-4 grid lg:max-w-4xl">
+            <div className="mb-4 grid lg:max-w-200">
               {call_to_action ? (
                 <p>
                   <a
@@ -115,7 +115,7 @@ const PostPage = ({
             max_allowed_depth: comments_max_allowed_depth,
           }}
         >
-          <PostCommentsSection paginated_comments={paginated_comments} reader />
+          <PostCommentsSection paginated_comments={paginated_comments} />
         </CommentsMetadataProvider>
       ) : null}
       {recent_posts.length > 0 ? (

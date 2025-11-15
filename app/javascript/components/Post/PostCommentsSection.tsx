@@ -44,8 +44,8 @@ export const useCommentsMetadata = (): CommentsMetadata => {
 };
 type CommentWithReplies = Comment & { replies: CommentWithReplies[] };
 
-type Props = { paginated_comments: PaginatedComments; reader?: boolean };
-export const PostCommentsSection = ({ paginated_comments, reader = false }: Props) => {
+type Props = { paginated_comments: PaginatedComments };
+export const PostCommentsSection = ({ paginated_comments }: Props) => {
   const { commentable_id, purchase_id } = useCommentsMetadata();
   const loggedInUser = useLoggedInUser();
 
@@ -129,8 +129,8 @@ export const PostCommentsSection = ({ paginated_comments, reader = false }: Prop
 
   return (
     <section className="comments border-b border-border">
-      <div className="mx-auto w-full max-w-7xl p-4 lg:px-16 lg:py-12">
-        <div className={classNames("flex flex-col gap-8", reader && "lg:max-w-4xl")}>
+      <div className="mx-auto w-full max-w-product-page p-4 lg:px-16 lg:py-12 xl:px-8">
+        <div className="flex flex-col gap-8 lg:max-w-200">
           <h2>
             {data.count} {data.count === 1 ? "comment" : "comments"}
           </h2>

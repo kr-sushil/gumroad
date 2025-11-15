@@ -56,11 +56,11 @@ const AffiliateRequestPage = ({ creator_profile }: Props) => {
       <div className="border-b border-border">
         <PageHeader
           title={`Become an affiliate for ${creator_profile.name}`}
-          className="mx-auto w-full max-w-7xl border-0 lg:px-16"
+          className="mx-auto w-full max-w-product-page border-0 lg:px-16 xl:px-8"
         />
       </div>
       <form className="border-b border-border pt-8">
-        <section className="mx-auto w-full max-w-7xl px-4 lg:px-16">
+        <section className="mx-auto w-full max-w-product-page px-4 lg:px-16 xl:px-8">
           <header>
             <div className="paragraphs">
               <p>

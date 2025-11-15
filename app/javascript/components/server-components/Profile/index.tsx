@@ -64,7 +64,7 @@ const PublicProfile = (props: Props) => {
     <>
       {props.bio || props.tabs.length > 1 ? (
         <header className="border-b border-border">
-          <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-8 lg:px-16">
+          <div className="mx-auto flex w-full max-w-product-page flex-col gap-4 px-4 py-8 lg:px-16 xl:px-8">
             {props.bio ? (
               <h1 className="whitespace-pre-line">
                 <AutoLink text={props.bio} />

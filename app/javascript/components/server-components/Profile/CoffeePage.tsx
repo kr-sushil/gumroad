@@ -35,7 +35,7 @@ export const CoffeePage = ({ creator_profile, selection: selectionOverride, ...p
         product={props.product}
         purchase={props.purchase}
         selection={selectionOverride ?? null}
-        classname="mx-auto w-full max-w-7xl lg:px-16"
+        classname="mx-auto w-full max-w-product-page lg:px-16 xl:px-8"
       />
     </ProfileLayout>
   );

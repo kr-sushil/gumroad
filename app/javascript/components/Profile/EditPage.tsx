@@ -197,7 +197,7 @@ export const EditProfile = (props: Props) => {
   return (
     <SectionReducerContext.Provider value={reducer}>
       <header className="relative border-b border-border">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-8 lg:px-16">
+        <div className="mx-auto flex w-full max-w-product-page flex-col gap-4 px-4 py-8 lg:px-16 xl:px-8">
           {/* Work around position:absolute being affected by header's grid */}
           <SectionToolbar>
             <EditorMenu label="Page settings" onClose={() => void saveTabs(tabs)}>

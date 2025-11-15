@@ -209,7 +209,7 @@ export const SectionLayout = ({
   ...props
 }: { children: React.ReactNode } & React.ComponentProps<"section">) => (
   <section className={classNames("relative border-b border-border", className)} {...props}>
-    <div className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-8 lg:p-16">{children}</div>
+    <div className="mx-auto grid w-full max-w-product-page gap-6 px-4 py-8 lg:p-16 xl:px-8">{children}</div>
   </section>
 );
 

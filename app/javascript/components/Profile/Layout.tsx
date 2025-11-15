@@ -26,7 +26,7 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
   return (
     <div className={classNames("flex min-h-full flex-col", className)}>
       <header className="relative z-20 border-b border-border bg-background text-lg">
-        <div className="mx-auto w-full lg:flex lg:max-w-7xl lg:items-center lg:gap-8 lg:px-16 lg:py-6">
+        <div className="mx-auto w-full max-w-product-page lg:flex lg:items-center lg:gap-8 lg:px-16 lg:py-6 xl:px-8">
           <section className="flex items-center gap-3 px-4 py-8 lg:grow-1 lg:p-0">
             {(loggedInUser?.isGumroadAdmin || loggedInUser?.isImpersonating) &&
             creatorProfile.external_id !== loggedInUser.id ? (
@@ -62,7 +62,7 @@ export const Layout = ({ className, creatorProfile, hideFollowForm, children }: 
       </header>
       <main className="grow-1">
         {children}
-        <PoweredByFooter className="mx-auto w-full lg:max-w-7xl lg:px-16 lg:py-6 lg:text-left" />
+        <PoweredByFooter className="mx-auto w-full max-w-product-page lg:px-16 lg:py-6 lg:text-left xl:px-8" />
       </main>
     </div>
   );
