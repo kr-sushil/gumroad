@@ -1,29 +1,29 @@
+import { Link, router } from "@inertiajs/react";
 import * as React from "react";
-import { Link, useLoaderData } from "react-router-dom";
-import { cast } from "ts-safe-cast";
 
-import { Workflow, deleteWorkflow } from "$app/data/workflows";
+import { Workflow } from "$app/types/workflow";
 import { formatStatNumber } from "$app/utils/formatStatNumber";
-import { asyncVoid } from "$app/utils/promise";
-import { assertResponseError } from "$app/utils/request";
 
 import { Button } from "$app/components/Button";
 import { Icon } from "$app/components/Icons";
 import { useLoggedInUser } from "$app/components/LoggedInUser";
 import { Modal } from "$app/components/Modal";
 import { showAlert } from "$app/components/server-components/Alert";
-import { Layout } from "$app/components/server-components/WorkflowsPage";
 import Placeholder from "$app/components/ui/Placeholder";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "$app/components/ui/Table";
+import { Layout } from "$app/components/WorkflowsPage";
 
 import placeholder from "$assets/images/placeholders/workflows.png";
 
-const WorkflowList = () => {
+type WorkflowListProps = {
+  workflows: Workflow[];
+};
+
+const WorkflowList = ({ workflows }: WorkflowListProps) => {
   const loggedInUser = useLoggedInUser();
-  const { workflows: initialWorkflows } = cast<{ workflows: Workflow[] }>(useLoaderData());
-  const [workflows, setWorkflows] = React.useState(initialWorkflows);
   const canManageWorkflow = !!loggedInUser?.policies.workflow.create;
   const newWorkflowButton = (
-    <Link to="/workflows/new" className="button accent" inert={!canManageWorkflow}>
+    <Link href={Routes.new_workflow_path()} className="button accent" inert={!canManageWorkflow || undefined}>
       New workflow
     </Link>
   );
@@ -65,18 +65,21 @@ const WorkflowList = () => {
                   ) : (
                     <Button
                       color="danger"
-                      onClick={asyncVoid(async () => {
-                        try {
-                          setDeletingWorkflow({ ...deletingWorkflow, state: "deleting" });
-                          await deleteWorkflow(deletingWorkflow.id);
-                          setWorkflows(workflows.filter((workflow) => workflow.external_id !== deletingWorkflow.id));
-                          setDeletingWorkflow(null);
-                          showAlert("Workflow deleted!", "success");
-                        } catch (e) {
-                          assertResponseError(e);
-                          showAlert("Sorry, something went wrong. Please try again.", "error");
-                        }
-                      })}
+                      onClick={() => {
+                        setDeletingWorkflow({ ...deletingWorkflow, state: "deleting" });
+                        router.delete(Routes.workflow_path(deletingWorkflow.id), {
+                          only: ["workflows", "flash"],
+                          onSuccess: () => {
+                            setDeletingWorkflow(null);
+                          },
+                          onError: () => {
+                            setDeletingWorkflow((previous) =>
+                              previous ? { ...previous, state: "delete-confirmation" } : previous,
+                            );
+                            showAlert("Sorry, something went wrong. Please try again.", "error");
+                          },
+                        });
+                      }}
                     >
                       Delete
                     </Button>
@@ -123,12 +126,12 @@ const WorkflowRow = ({
       <h3 style={{ marginRight: "auto" }}>{workflow.name}</h3>
       <div style={{ display: "flex", gap: "var(--spacer-4)", alignItems: "center" }}>
         {workflow.published ? <small>Published</small> : <small>Unpublished</small>}
-        <div className="button-group">
+        <div className="flex flex-wrap gap-2">
           <Link
             className="button"
-            to={`/workflows/${workflow.external_id}/edit`}
+            href={Routes.edit_workflow_path(workflow.external_id)}
             aria-label="Edit workflow"
-            inert={!canManageWorkflow}
+            inert={!canManageWorkflow || undefined}
           >
             <Icon name="pencil" />
           </Link>
@@ -141,56 +144,54 @@ const WorkflowRow = ({
   );
 
   return workflow.installments.length > 0 ? (
-    <table key={workflow.external_id}>
-      <caption>{header}</caption>
-      <thead>
-        <tr>
-          <th style={workflow.published ? { width: "40%" } : undefined}>Email</th>
+    <Table key={workflow.external_id}>
+      <TableCaption>{header}</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead style={workflow.published ? { width: "40%" } : undefined}>Email</TableHead>
           {workflow.published ? (
             <>
-              <th>Delay</th>
-              <th>Sent</th>
-              <th>Opens</th>
-              <th>Clicks</th>
+              <TableHead>Delay</TableHead>
+              <TableHead>Sent</TableHead>
+              <TableHead>Opens</TableHead>
+              <TableHead>Clicks</TableHead>
             </>
           ) : null}
-        </tr>
-      </thead>
-      <tbody>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {workflow.installments.map((installment) => (
-          <tr key={installment.external_id}>
-            <td data-label="Email">{installment.name}</td>
+          <TableRow key={installment.external_id}>
+            <TableCell>{installment.name}</TableCell>
             {workflow.published ? (
               <>
-                <td data-label="Delay">
+                <TableCell label="Delay">
                   {installment.delayed_delivery_time_duration} {installment.displayed_delayed_delivery_time_period}
-                </td>
-                <td data-label="Sent" style={{ whiteSpace: "nowrap" }}>
+                </TableCell>
+                <TableCell label="Sent" className="whitespace-nowrap">
                   {formatStatNumber({ value: installment.sent_count ?? 0 })}
-                </td>
-                <td data-label="Opens" style={{ whiteSpace: "nowrap" }}>
+                </TableCell>
+                <TableCell label="Opens" className="whitespace-nowrap">
                   {`${formatStatNumber({ value: installment.open_rate ?? 0 })}%`}
-                </td>
-                <td data-label="Clicks" style={{ whiteSpace: "nowrap" }}>
+                </TableCell>
+                <TableCell label="Clicks" className="whitespace-nowrap">
                   {formatStatNumber({ value: installment.click_count })}
-                </td>
+                </TableCell>
               </>
             ) : null}
-          </tr>
+          </TableRow>
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   ) : (
-    <section className="paragraphs" key={workflow.external_id}>
+    <section className="flex flex-col gap-4" key={workflow.external_id}>
       {header}
       <Placeholder>
         <h4>
-          <>
-            No emails yet,{" "}
-            <Link to={`/workflows/${workflow.external_id}/emails`} inert={!canManageWorkflow}>
-              add one
-            </Link>
-          </>
+          No emails yet,{" "}
+          <Link href={Routes.workflow_emails_path(workflow.external_id)} inert={!canManageWorkflow || undefined}>
+            add one
+          </Link>
         </h4>
       </Placeholder>
     </section>

@@ -62,7 +62,7 @@ const AffiliateRequestPage = ({ creator_profile }: Props) => {
       <form className="border-b border-border pt-8">
         <section className="mx-auto w-full max-w-product-page px-4 lg:px-16 xl:px-8">
           <header>
-            <div className="paragraphs">
+            <div className="flex flex-col gap-4">
               <p>
                 Applying to be an affiliate is easy. Fill out the form below and let {creator_profile.name} know how
                 you'll be promoting their products.
@@ -75,7 +75,7 @@ const AffiliateRequestPage = ({ creator_profile }: Props) => {
           </header>
           {formStatus.type === "success" ? (
             <div role="alert" className="success">
-              <div className="paragraphs">
+              <div className="flex flex-col gap-4">
                 <p>Your request has been submitted! We will send you an email notification when you are approved.</p>
                 {formStatus.requesterHasExistingAccount ? null : (
                   <p>
